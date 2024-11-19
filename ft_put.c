@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_put.c                                    :+:      :+:    :+:   */
+/*   ft_put.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rockdongmin <marvin@42.fr>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 16:21:15 by rockdongmin       #+#    #+#             */
-/*   Updated: 2024/11/17 13:46:09 by rockdongmin      ###   ########.fr       */
+/*   Updated: 2024/11/19 22:35:46 by rockdongmin      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	ft_putstr(char *str)
 	int	count;
 
 	if (str == NULL)
-		return (ft_putstr("(null)"));
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
 	count = 0;
 	while (str[count])
 	{
@@ -42,10 +45,10 @@ int	ft_putptr(void *ptr)
 
 	addr = (unsigned long)ptr;
 	hex = "0123456789abcdef";
-	if (addr == 0)
+	if (addr == NULL)
 	{
-		write(1, "0x0", 3);
-		return (3);
+		write(1, "(nil)", 5);
+		return (5);
 	}
 	i = 15;
 	while (i >= 0)
@@ -65,9 +68,10 @@ int	ft_puthex(unsigned int nb, int flag)
 	char	*hex;
 	int		count;
 
-	hex = "0123456789abcdef";
 	if (flag)
-		hex = "012345678ABCDEF";
+		hex = "0123456789ABCDEF";
+	else
+		hex = "0123456789abcdef";
 	count = 0;
 	if (nb >= 16)
 		count = count + ft_puthex(nb / 16, flag);
@@ -89,7 +93,6 @@ int	ft_putnbr(long long nb)
 	}
 	if (nb >= 10)
 		count = count + ft_putnbr(nb / 10);
-	else
-		count = count + ft_putchar(nb % 10 + '0');
+	count = count + ft_putchar(nb % 10 + '0');
 	return (count);
 }
