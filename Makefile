@@ -6,31 +6,34 @@
 #    By: rockdongmin <marvin@42.fr>                 +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/17 16:55:53 by rockdongmin       #+#    #+#              #
-#    Updated: 2024/11/18 15:24:21 by rockdongmin      ###   ########.fr        #
+#    Updated: 2024/11/21 19:41:17 by rockdongmin      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+NAME = libftprintf.a
+LIBFTDIR = ./libft
+LIBFTFILE = libft.a
+
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Ilibft
+CFLAGS = -Wall -Wextra -Werror -I$(LIBFTDIR)
 
-TARGET = a.out
+RM = rm -rf
+AR = ar crs
 
-SRCS = ft_printf.c ft_put.c $(wildcard libft/*.c)
+SRCS = ft_printf.c ft_put.c
 
 OBJS = $(SRCS:.c=.o)
 
-all: $(TARGET)
+all: $(NAME)
 
-$(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $(TARGET)
-
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+$(NAME): $(OBJS)
+	make -C $(LIBFTDIR)
+	$(AR) $(NAME) $(OBJS) $(LIBFTDIR)/$(LIBFTFILE)
 
 clean:
-	rm -f $(OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
-	rm -f $(TARGET)
+	$(RM) $(NAME)
 
 re: fclean all
