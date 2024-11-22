@@ -1,0 +1,6 @@
+#!/bin/zsh
+find . -type f -name '*~' -exec rm {} \;
+find . -type f -name '#*#' -exec rm {} \;
+
+
+find . -type f \( -name '*~' -or -name '#*#' \) -print -delete 
